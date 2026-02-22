@@ -1,0 +1,18 @@
+images:
+  - location: "https://cloud-images.ubuntu.com/releases/24.04/release/ubuntu-24.04-server-cloudimg-arm64.img"
+    arch: "aarch64"
+
+mounts:
+  - location: "/Users/amaldb/sandbox/Tartarus"
+    writable: true
+
+provision:
+  - mode: system
+    script: |
+      #!/bin/bash
+      set -eux -o pipefail
+      export DEBIAN_FRONTEND=noninteractive
+      apt-get update
+      apt-get install -y bpfcc-tools python3-bpfcc python3-pip build-essential linux-headers-$(uname -r)
+      apt-get clean
+
