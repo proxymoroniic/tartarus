@@ -1,8 +1,14 @@
+<p align="center">
+  <img src="logo.png" width="200" alt="Tartarus" />
+</p>
+
 # Tartarus
 
-<p align="center"><img src="logo.png" width="200" alt="Tartarus logo" /></p>
+**What we're doing:** A lightweight way to restrict what specific processes can do without putting them in a container or a full sandbox. Policy is declarative (roles + a small bitmap of flags); enforcement lives in the kernel via BPF and LSM hooks. 
 
-The pit below: a process pit built on BPF. Enroll a PID and LSM hooks (e.g. `file_open`) enforce what it can do. Policy is JSON with roles and a small bitmap of flags (file access, network, exec, setuid, ptrace). Go + cilium/ebpf.
+**Inspiration:** [BpfJailer: eBPF Mandatory Access Control](https://lpc.events/event/19/contributions/2159/attachments/1833/3929/BpfJailer%20LPC%202025.pdf) (LPC 2025). Tartarus is a minimal take on those ideas and nowhere near the scope of Meta's BpfJailer.
+
+The pit below: enroll a PID and LSM hooks (e.g. `file_open`) enforce what it can do. Policy comes from `config/policy.json`. Go + cilium/ebpf.
 
 We rewrote the original Python/BCC prototype. BPF is now plain C, compiled with clang and embedded via bpf2go—no BCC. Policy comes from `config/policy.json`; the daemon loads it and fills the `role_flags` map. Forked children stay in the pit via a `task_alloc` hook that copies the parent’s pod/role/flags. Enrollment is two-phase: the daemon puts the process in a pending map, and on its next syscall the BPF side migrates it into task-local storage, so we don’t need the PID at load time.
 
