@@ -10,7 +10,7 @@ while True:
         with open("secret.txt", "r") as f:
             print(f"SUCCESS (Attempt {attempt}): Read data: {f.read().strip()}")
     except PermissionError:
-        print("BLOCKED: Access denied by BpfJailer!")
+        print("BLOCKED: Access denied by Tartarus!")
     except Exception as e:
         print(f"Error: {e}")
     time.sleep(2)

@@ -1,0 +1,25 @@
+{
+    "roles": {
+      "restricted": {
+        "flags": {
+          "allow_file_access": false,
+          "allow_network": false,
+          "allow_exec": false
+        }
+      },
+      "permissive": {
+        "flags": {
+          "allow_file_access": true,
+          "allow_network": true,
+          "allow_exec": true
+        }
+      },
+      "webserver": {
+        "flags": {
+          "allow_file_access": true,
+          "allow_network": true,
+          "allow_exec": false
+        }
+      }
+    }
+  }

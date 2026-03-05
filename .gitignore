@@ -1,0 +1,10 @@
+docs/
+my-learnings.md
+
+# Build
+bin/
+*.o
+internal/bpf/*.o
+
+# Generated (e.g. make vmlinux)
+bpf/headers/vmlinux.h
